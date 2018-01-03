@@ -501,7 +501,10 @@ class Pymarketcap(object):
                         usd_market_cap = sub(r'\$|,', '', usd_market_cap)
                 elif n == 4:
                     _price_usd = c.getText().replace('\n', '')
-                    price_usd = self.parse_float(sub(r' |\$', '', _price_usd))
+                    if _price_usd != '?':
+                        price_usd = self.parse_float(sub(r' |\$', '', _price_usd))
+                    else:
+                        price_usd = None
                 elif n == 5:
                     circulating_supply = c.getText().replace('\n', '').replace(' ', '')
                     if '*' in circulating_supply:
