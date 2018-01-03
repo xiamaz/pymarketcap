@@ -691,6 +691,20 @@ class Pymarketcap(object):
 
         return response
 
+    def all_coins(self):
+        """Get names and abbreviations of all coins listed on coinmarketcap."""
+        url = urljoin(self.urls["web"], 'all/views/all/')
+        html = self._html(url)
+        cs = html.find('tbody').find_all('tr') # Exchanges
+        #marks = html.find('tbody').find_all('tr')
+        response = []
+        coins = {}
+        for c in cs:
+            full_name = c.find('a',{'class':'currency-name-container'}).get_text()
+            abbrev = c.find('td',{'class':'text-left col-symbol'}).get_text()
+            coins[abbrev] = full_name
+        return coins
+
 
     #######   GRAPHS API METHODS   #######
 
